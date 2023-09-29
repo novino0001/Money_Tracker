@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+ <body>
+     <h1 class  = "mt-4"> <span class="red">Your Incomes</span></h1>
+         <!-- <h2>Created with love by <a href="http://pablogarciafernandez.com" target="_blank"></a></h2> -->
+         
+         <table class="container mt-3">
+           <thead>
+             <tr>
+               <th><h1>Payment_mode </h1></th>
+               <th><h1>Transition_id </h1></th>
+               <th><h1>Time_info</h1></th>
+               <th><h1>Category</h1></th>
+               <th><h1>amount</h1></th>
+                <th><h1>details</h1></th>
+             </tr>
+           </thead>
+           <tbody>
+            {% for inc in income%}
+            {% if request.user.is_authenticated %}
+            {% if inc.user_id == request.user.id %}
+            {% if inc.type == 'Income' %}
+            <tr>
+                 
+                <td> <p style="color:green">{{ inc.mode}}</p></td>
+                {% if inc.expense_way != 'cash' %}
+                <td>{{inc.Transition_id}}</td>
+                {% else %}
+                <td> --- </td>
+                {% endif %}
+                <td>{{inc.Transition_date}}</td>
+                <td>{{inc.category}}</td>
+                <td>  <p style="color:green"> +{{inc.amount}}<span>&#8377;</span></p></td>
+                <td>Received_from   - {{ inc.details}}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+      {% endfor %}
+             
+             
+           </tbody>
+         </table>
+ 
+         <table class = "container">
+     <thead>
+    
+        <th class = "text-center">Total Incomes </th>
+        
+        <th><p style="color:green">  {{inc_total}} </th>
+        
+    
+     </thead>
+    
+    
+    </table>    
+ {% endblock %}
